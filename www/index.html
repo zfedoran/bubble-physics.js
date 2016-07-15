@@ -1,0 +1,36 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>BubblePhysics</title>
+
+        <!-- Use minimum-scale=1 to enable GPU rasterization -->
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1"
+        >
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.25/vue.min.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+            <svg v-bind:width="width" 
+                 v-bind:height="height" 
+                 viewPort="0 0 {{width}} {{height}}" 
+                 version="1.1" 
+                 xmlns="http://www.w3.org/2000/svg">
+
+            <polygon 
+                v-bind:points="polygonFromPmList(body, time)" 
+                v-bind:style="'fill:#efefef;'"
+                v-for="body in getBodyList()"/>
+
+            </svg>
+        </div>
+
+        <script src="/main.js"></script>
+        <script src="/index.js"></script>
+    </body>
+</html>
