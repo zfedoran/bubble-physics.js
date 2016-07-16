@@ -12,6 +12,9 @@
         >
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.25/vue.min.js"></script>
+        <style>
+            html, body {padding: 0; margin: 0;}
+        </style>
     </head>
 
     <body>
@@ -22,9 +25,8 @@
                  version="1.1" 
                  xmlns="http://www.w3.org/2000/svg">
 
-            <polygon 
-                v-bind:points="polygonFromPmList(body, time)" 
-                v-bind:style="'fill:#efefef;'"
+            <polygon style="stroke:#ccc;fill:none;" time="{{time}}"
+                v-bind:points="polygonFromPmList(body.pointMassList, time)" 
                 v-for="body in getBodyList()"/>
 
             </svg>

@@ -265,9 +265,15 @@ class World {
             const prev = bA.pointMassList[prevPt].position;
             const next = bA.pointMassList[nextPt].position;
 
-            const fromPrev = vec2.fromValues(pt[0] - prev[0], pt[1] - prev[1]);
-            const toNext   = vec2.fromValues(next[0] - pt[0], next[1] - pt[1]);
-            const ptNorm   = vec2.fromValues(fromPrev[0] + toNext[0], fromPrev[1] - toNext[1]);
+            const fromPrev = vec2.fromValues(
+                pt[0] - prev[0], 
+                pt[1] - prev[1]);
+            const toNext   = vec2.fromValues(
+                next[0] - pt[0], 
+                next[1] - pt[1]);
+            const ptNorm   = vec2.fromValues(
+                fromPrev[0] + toNext[0], 
+                fromPrev[1] + toNext[1]);
 
             Utils.perpendicularVector(ptNorm, ptNorm);
 
@@ -426,7 +432,7 @@ class World {
 
             const tangent    = Utils.perpendicularVector(info.normal);
             const friction   = materialPair.friction;
-            const fNumerator = friction * vec2.dot(relVel, tangent, fNumerator);
+            const fNumerator = friction * vec2.dot(relVel, tangent);
             const f          = fNumerator / jDenom;
 
             if (relDot <= 0.0001) {

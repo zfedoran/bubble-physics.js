@@ -50,6 +50,7 @@ class ClosedShape {
             }
 
             center[0] /= this.vertices.length;
+            center[1] /= this.vertices.length;
 
             for (let i = 0; i < this.vertices.length; i++) {
                 this.vertices[i][0] -= center[0];
@@ -58,7 +59,7 @@ class ClosedShape {
         }
     }
 
-    transformVertices(worldPosition, angleInRadians, scale, list = this.vertices) {
+    transformVertices(worldPosition, angleInRadians, scale, list = []) {
         const c = Math.cos(angleInRadians);
         const s = Math.sin(angleInRadians);
 
@@ -66,15 +67,15 @@ class ClosedShape {
             const x   = this.vertices[i][0] * scale[0];
             const y   = this.vertices[i][1] * scale[1];
 
-            const vec = vec2.fromValues(x, y);
-
-            Utils.rotateVector(vec, c, s, vec);
-
-            vec[0] += worldPosition[0];
-            vec[1] += worldPosition[1];
+            const vec = vec2.fromValues(
+                (c * x) - (s * y) + worldPosition[0],
+                (c * y) + (s * x) + worldPosition[1]
+            );
 
             list[i] = vec;
         }
+
+        return list;
     }
 }
 

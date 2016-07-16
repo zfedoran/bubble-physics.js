@@ -148,15 +148,15 @@ class Body {
         var baseNormal    = vec2.create(),
             currentNormal = vec2.create();
 
-        for (var j = 0; j < len; j++) {
+        for (let i = 0; i < len; i++) {
             vec2.set(baseNormal,
-                     this.baseShape.vertices[j][0], 
-                     this.baseShape.vertices[j][1]);
+                     this.baseShape.vertices[i][0], 
+                     this.baseShape.vertices[i][1]);
             vec2.normalize(baseNormal, baseNormal);
 
             vec2.set(currentNormal, 
-                     this.pointMassList[j].position[0] - this.derivedPosition[0], 
-                     this.pointMassList[j].position[1] - this.derivedPosition[1]);
+                     this.pointMassList[i].position[0] - this.derivedPosition[0], 
+                     this.pointMassList[i].position[1] - this.derivedPosition[1]);
             vec2.normalize(currentNormal, currentNormal);
 
             var dot = vec2.dot(baseNormal, currentNormal);
@@ -169,7 +169,7 @@ class Body {
                 theta = -theta;
             }
 
-            if (j === 0) {
+            if (i === 0) {
                 originalSign  = (theta >= 0) ? 1 : -1;
                 originalAngle = theta;
             } else {
@@ -383,33 +383,6 @@ class Body {
             dist       : closest,
             point      : outPoint,
             pointIndex : outPointIndex
-        }
-    }
-
-    addGlobalForce(pt, force) {
-        const NEGATIVE_PI_OVER_TWO = -Math.PI / 2;
-        const s = Math.sin(NEGATIVE_PI_OVER_TWO);
-        const c = Math.sin(NEGATIVE_PI_OVER_TWO);
-
-        const toPoint = vec2.create();
-        const torque  = vec2.create();
-        const R       = vec2.create();
-
-        R[0] = this.derivedPosition[0] - pt[0];
-        R[1] = this.derivedPosition[1] - pt[1];
-
-        const torqueF = R[0] * force[1] - R[1] * force[0];
-
-        for (var i = 0; i < this.pointMassList.length; i++) {
-            const point = this.pointMassList[i];
-
-            toPoint[0] = point.position[0] - this.derivedPosition[0];
-            toPoint[1] = point.position[1] - this.derivedPosition[1];
-
-            Utils.rotateVector(toPoint, c, s, torque);
-
-            point.force[0] += torque[0] * torqueF + force[0];
-            point.force[1] += torque[1] * torqueF + force[1];
         }
     }
 }

@@ -135,7 +135,7 @@ class SpringBody extends Body {
 
         const len   = this.pointMassList.length;
         for(var i = 0; i < len; i++) {
-            this.pointMassList[i].force[1] += 0.9;
+            this.pointMassList[i].force[1] -= 0.9;
         }
     }
 }
