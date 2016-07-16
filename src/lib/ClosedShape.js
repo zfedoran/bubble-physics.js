@@ -59,7 +59,7 @@ class ClosedShape {
         }
     }
 
-    transformVertices(worldPosition, angleInRadians, scale, list = []) {
+    transformVertices(worldPosition, angleInRadians, scale, outVertexList) {
         const c = Math.cos(angleInRadians);
         const s = Math.sin(angleInRadians);
 
@@ -72,10 +72,11 @@ class ClosedShape {
                 (c * y) + (s * x) + worldPosition[1]
             );
 
-            list[i] = vec;
+            outVertexList[i][0] = vec[0];
+            outVertexList[i][1] = vec[1];
         }
 
-        return list;
+        return outVertexList;
     }
 }
 

@@ -69,12 +69,12 @@ class Body {
 
         if (this.baseShape.vertices.length != this.pointMassList.length) {
             this.pointMassList = [];
-            this.globalShape   = [];
+            this.globalShape   = this.baseShape.vertices.map((o) => vec2.clone(o));
 
             this.baseShape.transformVertices(this.derivedPosition, this.derivedAngle, this.scale, this.globalShape);
 
             for (var i = 0; i < this.baseShape.vertices.length; i++) {
-                this.pointMassList.push(new PointMass(0, this.globalShape[i]));
+                this.pointMassList.push(new PointMass(0, vec2.clone(this.globalShape[i])));
             }
         }
     }

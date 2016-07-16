@@ -5,6 +5,7 @@ export ClosedShape from './lib/ClosedShape'
 export CollisionInfo from './lib/CollisionInfo'
 export MaterialPair from './lib/MaterialPair'
 export PointMass from './lib/PointMass'
+export PressureBody from './lib/PressureBody'
 export Spring from './lib/Spring'
 export SpringBody from './lib/SpringBody'
 export Utils from './lib/Utils'
@@ -95,13 +96,13 @@ function initScene() {
     groundShape.addVertex(BubblePhysics.Vec2.fromValues(20, 0));
     groundShape.finish();
 
-    var fallingShape = new BubblePhysics.ClosedShape();
-    fallingShape.begin();
-    fallingShape.addVertex(BubblePhysics.Vec2.fromValues(0, 0));
-    fallingShape.addVertex(BubblePhysics.Vec2.fromValues(0, 1));
-    fallingShape.addVertex(BubblePhysics.Vec2.fromValues(1, 1));
-    fallingShape.addVertex(BubblePhysics.Vec2.fromValues(1, 0));
-    fallingShape.finish();
+    var boxShape = new BubblePhysics.ClosedShape();
+    boxShape.begin();
+    boxShape.addVertex(BubblePhysics.Vec2.fromValues(0, 0));
+    boxShape.addVertex(BubblePhysics.Vec2.fromValues(0, 1));
+    boxShape.addVertex(BubblePhysics.Vec2.fromValues(1, 1));
+    boxShape.addVertex(BubblePhysics.Vec2.fromValues(1, 0));
+    boxShape.finish();
 
     var ground = new BubblePhysics.Body(groundShape, Number.POSITIVE_INFINITY, BubblePhysics.Vec2.fromValues(5, 2), 1);
     ground.isStatic = false;
@@ -112,10 +113,13 @@ function initScene() {
 
     var len = 20;
     for (var i = 0; i < len; i++) {
-        var springBody = new BubblePhysics.SpringBody(fallingShape, 1, 100, 2, 100, 2, BubblePhysics.Vec2.fromValues(5+Math.random(), i));
-            springBody.addSpring(springBody.pointMassList[0], springBody.pointMassList[2], 100, 12);
-            springBody.addSpring(springBody.pointMassList[1], springBody.pointMassList[3], 100, 12);
-        world.addBody(springBody);
+        var pblock = new BubblePhysics.PressureBody(boxShape, 1, 1, 300, 2, 100, 2, BubblePhysics.Vec2.fromValues(5+Math.random(), i*0.5));
+        world.addBody(pblock);
+
+        var block = new BubblePhysics.SpringBody(boxShape, 1, 100, 2, 100, 2, BubblePhysics.Vec2.fromValues(5+Math.random(), i*0.5));
+            block.addSpring(block.pointMassList[0], block.pointMassList[2], 100, 12);
+            block.addSpring(block.pointMassList[1], block.pointMassList[3], 100, 12);
+        world.addBody(block);
     }
 
     return world;

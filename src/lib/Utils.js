@@ -25,8 +25,11 @@ class Utils {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
     static perpendicularVector(vecIn, vecOut = vec2.create()) {
-        vecOut[0] = -vecIn[1];
-        vecOut[1] = vecIn[0];
+        const a = -vecIn[1];
+        const b = vecIn[0];
+
+        vecOut[0] = a;
+        vecOut[1] = b;
 
         return vecOut;
     }

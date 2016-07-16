@@ -23,10 +23,10 @@ class SpringBody extends Body {
     constructor(
         shape,
         massPerPoint,
-        edgeSpringK,
-        edgeSpringDamp,
         shapeSpringK    = 0,
         shapeSpringDamp = 0,
+        edgeSpringK     = 0,
+        edgeSpringDamp  = 0,
         position        = vec2.create(),
         angleInRadians  = 0,
         scale           = vec2.fromValues(1, 1),
